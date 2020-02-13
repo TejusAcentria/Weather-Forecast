@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.weatherforecast.Adapter.WeatherListAdapter
@@ -29,23 +28,19 @@ class MainActivity : AppCompatActivity() {
 
     private var arrayListForecast: MutableList<Forecast>? = null
 
-    private val JSON_URL =
-        "http://api.openweathermap.org/data/2.5/forecast?q=Jaipur&cnt=5&mode=json&units=metric&appid=36b391cad222acde5d9f53bd20b64e98"
-
     var weatherList: RecyclerView? = null
     var weatherListAdapter: WeatherListAdapter? = null
-    var currentTempText:TextView?=null
-    var currentDayofweek:TextView?=null
-    var currentCity:TextView?=null
-
+    var currentTempText: TextView? = null
+    var currentDayofweek: TextView? = null
+    var currentCity: TextView? = null
+    var cityName: String = "jaipur"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         initView()
 
-
-        loadWeatherList()
+        loadWeatherList(cityName)
 
         arrayListForecast = ArrayList()
 
@@ -55,11 +50,11 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         weatherList = findViewById(R.id.weatherList)
 
-        currentTempText=findViewById(R.id.textView2)
+        currentTempText = findViewById(R.id.textView2)
 
-        currentCity=findViewById(R.id.textView)
+        currentCity = findViewById(R.id.textView)
 
-        currentDayofweek=findViewById(R.id.textView3)
+        currentDayofweek = findViewById(R.id.textView3)
 
         val viewManager = LinearLayoutManager(this)
         weatherList.apply {
@@ -68,7 +63,6 @@ class MainActivity : AppCompatActivity() {
             hasFixedSize()
         }
     }
-
 
 
     private fun renderForecastWeather(json: JSONObject) {
@@ -108,10 +102,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setCurrentDate() {
-        val sdf = SimpleDateFormat("EE")
+        val sdf = SimpleDateFormat(getString(R.string.date_pattern))
         val d = Date()
         val dayOfTheWeek = sdf.format(d)
-        currentDayofweek!!.text = "Todays " + " " + dayOfTheWeek
+        currentDayofweek!!.text = String.format(getString(R.string.todays), dayOfTheWeek)
     }
 
 
@@ -121,35 +115,34 @@ class MainActivity : AppCompatActivity() {
         val city = json.getJSONObject("city")
 
         currentCity!!.text = city.getString("name")
-        currentTempText!!.text = main.getString("temp") + "°C"
+        currentTempText!!.text =
+            String.format(getString(R.string.temperature), main.getString("temp"))
     }
 
 
-    private fun loadWeatherList() {
+    private fun loadWeatherList(city: String) {
         showProgress()
         val stringRequest = StringRequest(
-            Request.Method.GET, JSON_URL,
-            object : Response.Listener<String> {
-                override fun onResponse(response: String) {
-                    try {
-                        hideProgress()
-                        val obj = JSONObject(response)
+            Request.Method.GET,
+            getString(R.string.Base_Url) + "q=" + city + "+&cnt=5&mode=json&units=" + getString(R.string.unit_tpe) + "&appid=" + getString(
+                R.string.apiId
+            ),
+            Response.Listener<String> { response ->
+                try {
+                    hideProgress()
+                    val obj = JSONObject(response)
 
-                        slideUp(weatherList!!)
+                    slideUp(weatherList!!)
 
-                        renderForecastWeather(obj)
+                    renderForecastWeather(obj)
 
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
             },
-            object : Response.ErrorListener {
-                override fun onErrorResponse(error: VolleyError) {
-                    hideProgress()
-                    gotToErrorActivity()
-                }
+            Response.ErrorListener {
+                hideProgress()
+                gotToErrorActivity()
             })
 
         val requestQueue = Volley.newRequestQueue(this)
@@ -162,20 +155,20 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun showProgress() {
+    private fun showProgress() {
         if (progressBar != null) {
             progressBar!!.visibility = View.VISIBLE
         }
     }
 
-    fun hideProgress() {
+    private fun hideProgress() {
         if (progressBar!!.visibility == View.VISIBLE) {
             progressBar!!.visibility = View.GONE
         }
     }
 
 
-    fun slideUp(view: RecyclerView) {
+    private fun slideUp(view: RecyclerView) {
         view.visibility = View.VISIBLE
         val animate = TranslateAnimation(
             0f,
@@ -183,17 +176,17 @@ class MainActivity : AppCompatActivity() {
             view.height.toFloat(),
             0f
         )
-        animate.duration = 1100
+        animate.duration = 2100
         animate.fillAfter = true
         view.startAnimation(animate)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 0) {
-            if (data?.getBooleanExtra("refresh", false) == true) {
-                loadWeatherList()
+            if (data?.getBooleanExtra(getString(R.string.error_refresh), false) == true) {
+                loadWeatherList(cityName)
             }
         }
 

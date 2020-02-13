@@ -36,7 +36,7 @@ class ErrorActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val result = Intent()
-        result.putExtra("refresh", refresh)
+        result.putExtra(getString(R.string.error_refresh), refresh)
         this.setResult(Activity.RESULT_OK, result)
         this.finish()
         super.onBackPressed()

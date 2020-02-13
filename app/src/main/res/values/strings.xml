@@ -11,4 +11,12 @@
     <string name="weather_thunder">&#xf01e;</string>
     <string name="weather_drizzle">&#xf01c;</string>
     <string name="title_activity_testing">TestingActivity</string>
-</resources>
+    <string name="temperature">%s°c</string>
+    <string name="todays">Today\'s %s</string>
+    <string name="date_pattern">EE</string>
+    <string name="apiId">36b391cad222acde5d9f53bd20b64e98</string>
+    <string name="Base_Url">http://api.openweathermap.org/data/2.5/forecast?</string>
+    <string name="temp_list">%s°/%s°</string>
+    <string name="error_refresh">refresh</string>
+    <string name="unit_tpe">metric</string>
+    </resources>
