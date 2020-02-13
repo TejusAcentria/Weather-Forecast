@@ -1,6 +1,7 @@
 # Slide to unlock
 Slide-to-unlock layout for Android
 
+<<<<<<< HEAD
 ![test](https://github.com/romychab/Slide-to-unlock/blob/master/screencast.gif)
 
 ### Usage:
@@ -58,3 +59,8 @@ Additional methods:
 
 See the source code of 'app' module for usage details.
 # SwipeToAct
+=======
+![test](https://github.com/TejusAcentria/Weather-Forecast/blob/master/images/one.JPEG)
+
+![test](https://github.com/TejusAcentria/Weather-Forecast/blob/master/images/two.JPEG)
+>>>>>>> 52d28d61f4522fb51697bdbdd4cd7277bfdc2f8a
