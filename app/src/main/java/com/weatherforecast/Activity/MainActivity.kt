@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     var currentDayofweek: TextView? = null
     var currentCity: TextView? = null
     var cityName: String = "jaipur"
+    var week_vlaue=5
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
             setCurrentDate()
 
-            for (i in 0..4) {
+            for (i in 0 until week_vlaue) {
 
                 val listItem = list.getJSONObject(i)
                 val temp = listItem.getJSONObject("main")
@@ -124,9 +125,7 @@ class MainActivity : AppCompatActivity() {
         showProgress()
         val stringRequest = StringRequest(
             Request.Method.GET,
-            getString(R.string.Base_Url) + "q=" + city + "+&cnt=5&mode=json&units=" + getString(R.string.unit_tpe) + "&appid=" + getString(
-                R.string.apiId
-            ),
+            getString(R.string.Base_Url) + "q=" + city + "+&cnt="+week_vlaue+"&mode=json&units="+getString(R.string.unit_tpe) + "&appid=" + getString(R.string.apiId),
             Response.Listener<String> { response ->
                 try {
                     hideProgress()
