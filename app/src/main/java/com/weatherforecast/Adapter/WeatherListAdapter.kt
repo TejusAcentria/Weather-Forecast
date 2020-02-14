@@ -14,8 +14,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class WeatherListAdapter(var mainActivity: MainActivity, var arrayListForecast: List<Forecast>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WeatherListAdapter(var mainActivity: MainActivity, var arrayListForecast: List<Forecast>) : RecyclerView.Adapter<ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,14 +35,14 @@ class WeatherListAdapter(var mainActivity: MainActivity, var arrayListForecast: 
 
             holder.minTemp.text = String.format(
                 mainActivity.getString(R.string.temp_list),
-                arrayListForecast.get(position).lowTemp,
-                arrayListForecast.get(position).highTemp
+                arrayListForecast[position].lowTemp,
+                arrayListForecast[position].highTemp
             )
-            holder.weather1.text = arrayListForecast.get(position).weather
+            holder.weather1.text = arrayListForecast[position].weather
 
             holder.dayOfWeek.text = SimpleDateFormat(mainActivity.getString(R.string.date_pattern), Locale.ENGLISH).format(date.time)
 
-            setWeatherIcon(arrayListForecast.get(position).weatherIocnId, holder.listIcon)
+            setWeatherIcon(arrayListForecast[position].weatherIocnId, holder.listIcon)
 
         }
     }
@@ -52,105 +51,105 @@ class WeatherListAdapter(var mainActivity: MainActivity, var arrayListForecast: 
         when (weatherIocnId) {
             "01d" -> {
 
-                listIcon!!.setImageResource(R.drawable.sun);
+                listIcon!!.setImageResource(R.drawable.sun)
 
             }
 
             "01n" -> {
-                listIcon!!.setImageResource(R.drawable.sun);
+                listIcon!!.setImageResource(R.drawable.sun)
 
             }
 
             "02d" -> {
-                listIcon!!.setImageResource(R.drawable.clear);
+                listIcon!!.setImageResource(R.drawable.clear)
 
             }
 
 
             "02n" -> {
-                listIcon!!.setImageResource(R.drawable.clear);
+                listIcon!!.setImageResource(R.drawable.clear)
 
             }
 
 
             "03d" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
             }
 
 
             "03n" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
             }
 
 
             "04d" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
             }
 
 
             "04n" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
             }
 
             "09d" -> {
-                listIcon!!.setImageResource(R.drawable.rain);
+                listIcon!!.setImageResource(R.drawable.rain)
 
             }
 
 
             "09n" -> {
-                listIcon!!.setImageResource(R.drawable.rain);
+                listIcon!!.setImageResource(R.drawable.rain)
 
             }
 
 
             "10d" -> {
-                listIcon!!.setImageResource(R.drawable.rain);
+                listIcon!!.setImageResource(R.drawable.rain)
 
             }
 
 
             "10n" -> {
-                listIcon!!.setImageResource(R.drawable.rain);
+                listIcon!!.setImageResource(R.drawable.rain)
 
             }
 
 
             "11d" -> {
-                listIcon!!.setImageResource(R.drawable.storm);
+                listIcon!!.setImageResource(R.drawable.storm)
 
             }
 
 
             "11n" -> {
-                listIcon!!.setImageResource(R.drawable.storm);
+                listIcon!!.setImageResource(R.drawable.storm)
 
 
             }
 
             "13d" -> {
-                listIcon!!.setImageResource(R.drawable.storm);
+                listIcon!!.setImageResource(R.drawable.storm)
 
             }
 
 
             "13n" -> {
-                listIcon!!.setImageResource(R.drawable.storm);
+                listIcon!!.setImageResource(R.drawable.storm)
 
 
             }
 
             "1d" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
             }
 
             "1n" -> {
-                listIcon!!.setImageResource(R.drawable.clouds);
+                listIcon!!.setImageResource(R.drawable.clouds)
 
 
             }
@@ -161,7 +160,7 @@ class WeatherListAdapter(var mainActivity: MainActivity, var arrayListForecast: 
 
 }
 
-class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class WeatherViewHolder(itemView: View) : ViewHolder(itemView) {
     var dayOfWeek = itemView.dayOfWeek
     var listIcon = itemView.listIcon
     var weather1 = itemView.weather1
